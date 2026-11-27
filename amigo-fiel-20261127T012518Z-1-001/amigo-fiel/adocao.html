@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulário de Adoção - Amigo Fiel</title>
+
+    <!-- Biblioteca do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #147074;
+            margin: 20px;
+            color: #000000;
+        }
+
+        h1 {
+            color: #49351f;
+            text-align: center;
+        }
+
+        /* ===== CABEÇALHO ===== */
+
+        .cabecalho {
+            background-color: #0f5357;
+            padding: 18px 35px;
+            border-radius: 12px;
+            max-width: 2200px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px #00000015;
+            box-sizing: border-box;
+        }
+
+        .logo-cabecalho {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .menu-cabecalho {
+            display: flex;
+            gap: 25px;
+        }
+
+        .menu-cabecalho a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .menu-cabecalho a:hover {
+            color: #4d773b;
+        }
+
+        .formulario {
+            background-color: white;
+            max-width: 600px;
+            padding: 25px;
+            margin: 30px auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #00000025;
+            box-sizing: border-box;
+        }
+
+        .pet-selecionado {
+            background-color: #eef5e9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 4px #ffffff;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .botao-enviar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #4d773b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botao-enviar:hover {
+            background-color: #355728;
+        }
+
+        .botao-enviar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #49351f;
+            font-weight: bold;
+        }
+
+        #mensagem {
+            color: #355728;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ===== CONFIRMAÇÃO DE ENVIO ===== */
+
+        .confirmacao {
+            display: none;
+            background-color: #eef5e9;
+            border: 2px solid #4d773b;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+            color: #355728;
+        }
+
+        .confirmacao h2 {
+            color: #355728;
+            margin-top: 0;
+        }
+
+        .confirmacao p {
+            line-height: 1.6;
+        }
+
+        .icone-confirmacao {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .botao-nova-solicitacao {
+            background-color: #4d773b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .botao-nova-solicitacao:hover {
+            background-color: #355728;
+        }
+
+        .rodape {
+            background-color: #06a0a5;
+            color: #ffffff;
+            margin-top: 50px;
+            padding: 35px 20px 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .rodape-conteudo {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .marca-rodape h2 {
+            color: #ffffff;
+            margin: 8px 0;
+        }
+
+        .icone-rodape {
+            font-size: 42px;
+        }
+
+        .marca-rodape p {
+            margin-top: 5px;
+        }
+
+        .links-rodape,
+        .redes-rodape {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .links-rodape a,
+        .redes-rodape a {
+            color: #082d49;
+            text-decoration: none;
+        }
+
+        .links-rodape a:hover,
+        .redes-rodape a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .rodape-final {
+            border-top: 1px solid #ddd;
+            margin-top: 30px;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .rodape-final p {
+            margin: 5px;
+        }
+
+        /* ===== CONVITE PARA ADOÇÃO ===== */
+
+        .convite-adocao {
+            max-width: 1150px;
+            margin: 70px auto 55px;
+            padding: 40px 45px;
+            box-sizing: border-box;
+            background: linear-gradient(120deg, #105d61, #218b83);
+            border-radius: 28px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 25px #105d6125;
+        }
+
+        .convite-texto {
+            max-width: 680px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .convite-etiqueta {
+            display: inline-block;
+            background: #ffffff25;
+            border: 1px solid #ffffff55;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .convite-adocao h2 {
+            color: white;
+            text-align: left;
+            font-size: 30px;
+            margin: 8px 0 12px;
+        }
+
+        .convite-adocao p {
+            color: #e3f4ef;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 23px;
+        }
+
+        .botao-convite {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #ffffff;
+            color: #176e72;
+            padding: 14px 22px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .botao-convite:hover {
+            background: #d9f3e9;
+            transform: translateY(-3px);
+        }
+
+        .botao-convite span {
+            font-size: 22px;
+        }
+
+        .convite-decoracao {
+            width: 190px;
+            height: 190px;
+            min-width: 190px;
+            border-radius: 50%;
+            background: #ffffff20;
+            border: 2px solid #ffffff45;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pata-grande {
+            font-size: 95px;
+        }
+
+        .coracao-convite {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 42px;
+            color: #c5f3df;
+            transform: rotate(12deg);
+        }
+
+        @media (max-width: 750px) {
+            .convite-adocao {
+                margin: 45px 15px;
+                padding: 30px 22px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .convite-adocao h2 {
+                font-size: 25px;
+                text-align: center;
+            }
+
+            .convite-decoracao {
+                width: 140px;
+                height: 140px;
+                min-width: 140px;
+            }
+
+            .pata-grande {
+                font-size: 70px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cabecalho {
+                flex-direction: column;
+                gap: 18px;
+                padding: 20px;
+            }
+
+            .menu-cabecalho {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .rodape-conteudo {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO DO SITE -->
+
+    <header class="cabecalho">
+
+        <a href="index.html" class="logo-cabecalho">
+            🐾 Amigo Fiel
+        </a>
+
+        <nav class="menu-cabecalho">
+            <a href="index.html">Início</a>
+            <a href="index.html#pets">Pets disponíveis</a>
+            <a href="index.html#como-adotar">Como adotar</a>
+        </nav>
+
+    </header>
+
+
+    <div class="formulario">
+
+        <div class="pet-selecionado">
+            Você está interessado em adotar:
+            <strong id="nome-pet">Selecione um pet</strong>
+        </div>
+
+        <form id="form-adocao">
+
+            <label for="nome">Seu nome completo</label>
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                autocomplete="name"
+                required>
+
+            <label for="telefone">Telefone</label>
+            <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                placeholder="(21) 99999-9999"
+                autocomplete="tel"
+                required>
+
+            <label for="email">E-mail</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="seuemail@exemplo.com"
+                autocomplete="email"
+                required>
+
+            <label for="pet-escolhido">Pet escolhido</label>
+            <select id="pet-escolhido" name="pet" required>
+                <option value="">Selecione um pet</option>
+                <option value="Rex">Rex</option>
+                <option value="Bidu">Bidu</option>
+                <option value="Garfield">Garfield</option>
+                <option value="Timtim">Timtim</option>
+                <option value="Lua">Lua</option>
+                <option value="Pérola">Pérola</option>
+            </select>
+
+            <label for="moradia">Como é sua moradia?</label>
+            <select id="moradia" name="moradia" required>
+                <option value="">Selecione</option>
+                <option value="Casa com quintal">Casa com quintal</option>
+                <option value="Casa sem quintal">Casa sem quintal</option>
+                <option value="Apartamento telado">Apartamento telado</option>
+                <option value="Apartamento sem telas">Apartamento sem telas</option>
+            </select>
+
+            <label for="experiencia">
+                Conte um pouco sobre sua experiência com animais
+            </label>
+            <textarea
+                id="experiencia"
+                name="experiencia"
+                placeholder="Você já teve animais? Há crianças ou outros animais na casa?"></textarea>
+
+            <button type="submit" class="botao-enviar" id="botao-enviar">
+                Enviar interesse
+            </button>
+
+            <p id="mensagem" role="status" aria-live="polite"></p>
+
+        </form>
+
+        <!-- MENSAGEM DE CONFIRMAÇÃO -->
+
+        <div id="confirmacao" class="confirmacao" role="status" aria-live="polite">
+
+            <div class="icone-confirmacao">🐾</div>
+
+            <h2>Solicitação enviada!</h2>
+
+            <p id="texto-confirmacao"></p>
+
+            <p>
+                Nossa equipe recebeu seus dados e agradece
+                por querer oferecer um lar cheio de carinho.
+            </p>
+
+            <button
+                type="button"
+                class="botao-nova-solicitacao"
+                id="nova-solicitacao">
+
+                Fazer outra solicitação
+
+            </button>
+
+        </div>
+
+        <a href="index.html" class="voltar">
+            ← Voltar para os pets
+        </a>
+
+    </div>
+
+
+    <script>
+        // CONFIGURAÇÃO DO SUPABASE
+
+        const SUPABASE_URL = "https://ybnkqlljdwzwytmneaxl.supabase.co";
+
+        const SUPABASE_ANON_KEY = "sb_publishable_PLaV9PlWLnCUXMZ7xxVyRQ_ReB6ztpV";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+
+        // IDENTIFICA O PET RECEBIDO PELA URL
+
+        const parametros = new URLSearchParams(window.location.search);
+
+        const pet = parametros.get("pet");
+
+        const campoPet = document.getElementById("pet-escolhido");
+
+        const nomePet = document.getElementById("nome-pet");
+
+        if (pet && [...campoPet.options].some(
+            opcao => opcao.value === pet
+        )) {
+            campoPet.value = pet;
+            nomePet.textContent = pet;
+        }
+
+
+        // ATUALIZA O NOME DO PET QUANDO O VISITANTE TROCAR A OPÇÃO
+
+        campoPet.addEventListener("change", function() {
+            nomePet.textContent = this.value || "Selecione um pet";
+        });
+
+
+        // ENVIA OS DADOS PARA O SUPABASE
+
+        const formulario = document.getElementById("form-adocao");
+
+        const mensagem = document.getElementById("mensagem");
+
+        const botaoEnviar = document.getElementById("botao-enviar");
+
+        const confirmacao = document.getElementById("confirmacao");
+
+        const textoConfirmacao = document.getElementById("texto-confirmacao");
+
+        const botaoNovaSolicitacao = document.getElementById("nova-solicitacao");
+
+
+        formulario.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            mensagem.textContent = "Enviando sua solicitação...";
+
+            botaoEnviar.disabled = true;
+
+            botaoEnviar.textContent = "Enviando...";
+
+            const nome = document.getElementById("nome").value.trim();
+
+            const telefone = document.getElementById("telefone").value.trim();
+
+            const email = document.getElementById("email").value.trim();
+
+            const petEscolhido = campoPet.value;
+
+            const moradia = document.getElementById("moradia").value;
+
+            const experiencia = document.getElementById("experiencia").value.trim();
+
+
+            // Junta moradia e experiência no campo mensagem da tabela
+
+            const mensagemCompleta =
+                "Moradia: " + moradia +
+                "\nExperiência com animais: " +
+                (experiencia || "Não informado");
+
+
+            try {
+
+                const { error } = await supabaseClient
+                    .from("solicitacoes_adocao")
+                    .insert([
+                        {
+                            nome: nome,
+                            email: email,
+                            telefone: telefone,
+                            pet: petEscolhido,
+                            mensagem: mensagemCompleta
+                        }
+                    ]);
+
+                if (error) {
+                    throw error;
+                }
+
+                // PREPARA A MENSAGEM DE CONFIRMAÇÃO
+
+                textoConfirmacao.textContent =
+                    `Obrigado, ${nome}! Seu interesse em adotar ${petEscolhido} foi registrado com sucesso.`;
+
+                // ESCONDE O FORMULÁRIO E MOSTRA A CONFIRMAÇÃO
+
+                formulario.style.display = "none";
+
+                confirmacao.style.display = "block";
+
+                mensagem.textContent = "";
+
+            } catch (error) {
+
+                console.error("Erro ao enviar solicitação:", error);
+
+                mensagem.textContent =
+                    "Não foi possível enviar sua solicitação. Confira sua conexão e tente novamente.";
+
+            } finally {
+
+                botaoEnviar.disabled = false;
+
+                botaoEnviar.textContent = "Enviar interesse";
+
+            }
+
+        });
+
+
+        // PERMITE FAZER UMA NOVA SOLICITAÇÃO
+
+        botaoNovaSolicitacao.addEventListener("click", function() {
+
+            formulario.reset();
+
+            formulario.style.display = "block";
+
+            confirmacao.style.display = "none";
+
+            mensagem.textContent = "";
+
+            campoPet.value = "";
+
+            nomePet.textContent = "Selecione um pet";
+
+        });
+
+    </script>
+
+
+    <!-- CONVITE PARA ADOÇÃO -->
+
+    <section class="convite-adocao">
+
+        <div class="convite-texto">
+            <span class="convite-etiqueta">🐾 Faça parte dessa história</span>
+
+            <h2>Um lar pode mudar uma vida!</h2>
+
+            <p>
+                Existem animais esperando por uma oportunidade.
+                Conheça nossos pets e descubra quem pode ser
+                seu novo melhor amigo.
+            </p>
+
+            <a href="index.html#pets" class="botao-convite">
+                Encontrar meu novo amigo
+                <span>→</span>
+            </a>
+        </div>
+
+        <div class="convite-decoracao">
+            <span class="pata-grande">🐾</span>
+            <span class="coracao-convite">♥</span>
+        </div>
+
+    </section>
+
+
+    <!-- RODAPÉ -->
+
+    <footer class="rodape">
+
+        <div class="rodape-conteudo">
+
+            <div class="marca-rodape">
+                <div class="icone-rodape">🐾</div>
+                <h2>Amigo Fiel</h2>
+                <p>Todo animal merece um lar cheio de amor.</p>
+            </div>
+
+            <nav class="links-rodape">
+                <a href="index.html">Início</a>
+                <a href="index.html#pets">Conheça nossos pets</a>
+                <a href="index.html#como-adotar">Como funciona</a>
+                <a href="adocao.html">Quero adotar</a>
+            </nav>
+
+            <div class="redes-rodape">
+                <p>Acompanhe nosso projeto</p>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Amigo Fiel - Todos os direitos reservados.</p>
+            <p>Feito com ❤️ pelos amantes dos animais.</p>
+        </div>
+
+    </footer>
+
+</body>
+</html>
