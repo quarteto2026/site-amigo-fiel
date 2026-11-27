@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Fiel - Adoção de Pets</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0fa094;
+            margin: 20px;
+            color: #000000;
+        }
+
+        h1, h2 {
+            color: #fffffe;
+            text-align: center;
+        }
+
+        .introducao {
+            text-align: center;
+        }
+
+        .lista-pets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .pet {
+            background-color: white;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #00000025;
+
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            align-self: start;
+            box-sizing: border-box;
+        }
+        
+
+        .galeria {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        
+        .galeria img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 420px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+
+        .seta {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #00000099;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .anterior {
+            left: 8px;
+        }
+
+        .proxima {
+            right: 8px;
+        }
+
+        .seta:hover {
+            background-color: #333333;
+        }
+
+        .contador {
+            text-align: center;
+            color: #666666;
+            font-size: 13px;
+        }
+
+        .informacoes {
+            line-height: 1.5;
+        }
+
+        .informacoes h4 {
+            color: #5c773e;
+            margin-bottom: 5px;
+        }
+
+        .informacoes p {
+            margin-top: 5px;
+        }
+
+        .botao-adocao {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4d773b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .botao-adocao:hover {
+            background-color: #355728;
+        }
+
+        @media (max-width: 900px) {
+            .lista-pets {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                margin: 12px;
+            }
+
+            .lista-pets {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+    
+
+/* ===== RODAPÉ AMIGO FIEL ===== */
+
+.rodape {
+    background: linear-gradient(135deg, #105d61, #176e72);
+    color: white;
+    margin-top: 100px;
+    padding: 85px 5% 0;
+    position: relative;
+    border-radius: 50% 50% 0 0 / 8% 8% 0 0;
+    overflow: hidden;
+}
+
+/* Conteúdo principal */
+
+.rodape-conteudo {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding-bottom: 45px;
+
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1.2fr 1fr;
+    gap: 35px;
+    align-items: start;
+}
+
+/* Marca */
+
+.marca-rodape {
+    text-align: center;
+}
+
+.logo-animais {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 15px;
+
+    background: #d5f0e5;
+    border: 4px solid #ffffff75;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+
+    box-shadow: 0 8px 20px #00000025;
+}
+
+.logo-animais span {
+    font-size: 39px;
+}
+
+.marca-rodape h2 {
+    color: #ffffff;
+    font-size: 27px;
+    margin: 10px 0;
+}
+
+.marca-rodape p {
+    color: #e3f4ef;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.frase-rodape {
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* Colunas */
+
+.coluna-rodape {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.coluna-rodape h3 {
+    color: #c5f3df;
+    font-size: 17px;
+    margin: 8px 0 10px;
+}
+
+.coluna-rodape a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.coluna-rodape a:hover {
+    color: #c5f3df;
+    transform: translateX(4px);
+}
+
+/* Faixa inferior */
+
+.rodape-final {
+    background: #218b83;
+    margin: 0 -5.56%;
+    padding: 20px 15px;
+    text-align: center;
+    border-top: 1px solid #ffffff35;
+}
+
+.rodape-final p {
+    color: #e3f4ef;
+    font-size: 13px;
+    margin: 6px;
+}
+
+/* Responsividade */
+
+@media (max-width: 850px) {
+    .rodape-conteudo {
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+    }
+
+    .coluna-rodape {
+        align-items: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .rodape {
+        padding-top: 65px;
+        border-radius: 35px 35px 0 0;
+    }
+
+    .rodape-conteudo {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+
+
+/* ===== NOVO CABEÇALHO AMIGO FIEL ===== */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Fundo principal */
+.cabecalho {
+    background: linear-gradient(135deg, #105d61, #218b83);
+    color: white;
+    border-radius: 0 0 65px 65px;
+    overflow: hidden;
+    padding: 0 5% 55px;
+}
+
+/* Menu superior */
+.menu-principal {
+    max-width: 1250px;
+    margin: auto;
+    min-height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo-icone {
+    background: white;
+    color: #176e72;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+}
+
+/* Links */
+.links-menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.links-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.links-menu a:hover {
+    color: #c5f3df;
+}
+
+/* Botão do menu */
+.botao-menu {
+    background: white;
+    color: #176e72;
+    padding: 13px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao-menu:hover {
+    background: #d9f3e9;
+}
+
+/* Área de destaque */
+.destaque {
+    max-width: 1250px;
+    margin: 35px auto 0;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+}
+
+.destaque-texto {
+    max-width: 590px;
+}
+
+.etiqueta {
+    display: inline-block;
+    background: #ffffff25;
+    border: 1px solid #ffffff55;
+    padding: 9px 15px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+}
+
+.destaque h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.08;
+    margin: 0 0 20px;
+    color: white;
+    text-align: left;
+}
+
+.destaque p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #e3f4ef;
+}
+
+/* Botões de destaque */
+.botoes-destaque {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.botao-principal,
+.botao-secundario {
+    padding: 15px 23px;
+    border-radius: 11px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao-principal {
+    background: white;
+    color: #176e72;
+}
+
+.botao-secundario {
+    border: 2px solid white;
+    color: white;
+}
+
+.botao-principal:hover {
+    background: #d9f3e9;
+}
+
+.botao-secundario:hover {
+    background: #ffffff20;
+}
+
+/* Ilustração provisória */
+.destaque-imagem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.circulo-imagem {
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    background: #d5f0e5;
+    border: 9px solid #ffffff65;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: relative;
+    box-shadow: 0 15px 35px #063e4050;
+}
+
+.circulo-imagem span {
+    font-size: 100px;
+}
+
+.coracao {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    color: #f5a33b;
+    font-size: 48px;
+}
+
+/* Adaptação para celulares */
+@media (max-width: 750px) {
+    .menu-principal {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .links-menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .destaque {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .botoes-destaque {
+        justify-content: center;
+    }
+
+    .circulo-imagem {
+        width: 220px;
+        height: 220px;
+    }
+
+    .circulo-imagem span {
+        font-size: 75px;
+    }
+}
+
+
+/* ===== CONVITE PARA ADOÇÃO ===== */
+
+.convite-adocao {
+    max-width: 1150px;
+    margin: 70px auto 55px;
+    padding: 40px 45px;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        120deg,
+        #105d61,
+        #218b83
+    );
+
+    border-radius: 28px;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    position: relative;
+    overflow: hidden;
+
+    box-shadow: 0 12px 25px #105d6125;
+}
+
+.convite-texto {
+    max-width: 680px;
+    position: relative;
+    z-index: 2;
+}
+
+.convite-etiqueta {
+    display: inline-block;
+    background: #ffffff25;
+    border: 1px solid #ffffff55;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.convite-adocao h2 {
+    color: white;
+    text-align: left;
+    font-size: 30px;
+    margin: 8px 0 12px;
+}
+
+.convite-adocao p {
+    color: #e3f4ef;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 23px;
+}
+
+.botao-convite {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+
+    background: #ffffff;
+    color: #176e72;
+
+    padding: 14px 22px;
+    border-radius: 12px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.botao-convite:hover {
+    background: #d9f3e9;
+    transform: translateY(-3px);
+}
+
+.botao-convite span {
+    font-size: 22px;
+}
+
+.convite-decoracao {
+    width: 190px;
+    height: 190px;
+    min-width: 190px;
+
+    border-radius: 50%;
+    background: #ffffff20;
+    border: 2px solid #ffffff45;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.pata-grande {
+    font-size: 95px;
+}
+
+.coracao-convite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 42px;
+    color: #c5f3df;
+    transform: rotate(12deg);
+}
+
+/* CELULAR */
+@media (max-width: 750px) {
+    .convite-adocao {
+        margin: 45px 15px;
+        padding: 30px 22px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .convite-adocao h2 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .convite-decoracao {
+        width: 140px;
+        height: 140px;
+        min-width: 140px;
+    }
+
+    .pata-grande {
+        font-size: 70px;
+    }
+}
+
+
+/* ===== LAYOUT LATERAL DE ADOÇÃO ===== */
+
+.layout-adocao {
+    max-width: 1450px;
+    margin: 35px auto;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: 310px minmax(0, 1fr);
+    gap: 25px;
+
+    align-items: start;
+}
+
+/* COLUNA ESQUERDA */
+
+.coluna-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* BLOCO DE DÚVIDAS */
+
+.bloco-duvidas {
+    background: linear-gradient(135deg, #105d61, #218b83);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 22px;
+    box-shadow: 0 8px 20px #00000020;
+}
+
+.icone-bloco {
+    font-size: 35px;
+}
+
+.bloco-duvidas h2 {
+    color: white;
+    text-align: left;
+    font-size: 23px;
+    margin: 12px 0;
+}
+
+.bloco-duvidas p {
+    color: #e3f4ef;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.botao-duvidas {
+    display: block;
+    background: white;
+    color: #176e72;
+    text-align: center;
+    padding: 13px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.botao-duvidas:hover {
+    background: #d5f0e5;
+}
+
+/* BLOCO DE DEPOIMENTOS */
+
+.bloco-depoimentos {
+    background: #f1f5f2;
+    padding: 22px 16px;
+    border-radius: 22px;
+    box-shadow: 0 5px 15px #00000015;
+}
+
+.bloco-depoimentos h2 {
+    color: #176e72;
+    font-size: 21px;
+    text-align: left;
+    margin: 0 0 12px;
+}
+
+.texto-depoimentos {
+    color: #526568;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.cartao-depoimento {
+    background: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 14px;
+    border: 1px solid #e0e9e5;
+}
+
+.cabecalho-depoimento {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-depoimento {
+    background: #d5f0e5;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+}
+
+.cabecalho-depoimento strong {
+    display: block;
+    color: #176e72;
+    font-size: 12px;
+}
+
+.cabecalho-depoimento small {
+    color: #777;
+    font-size: 11px;
+}
+
+.cartao-depoimento p {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.estrelas {
+    color: #e5a13c;
+    letter-spacing: 2px;
+}
+
+/* COLUNA DOS PETS */
+
+.area-pets {
+    min-width: 0;
+}
+
+.area-pets > h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+    font-size: 26px;
+}
+
+/* DOIS CARDS POR LINHA */
+
+.area-pets .lista-pets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 950px) {
+    .layout-adocao {
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 15px;
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 700px) {
+    .layout-adocao {
+        grid-template-columns: 1fr;
+    }
+
+    .area-pets .lista-pets {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== INFORMAÇÕES DOS PETS ===== */
+
+.informacoes {
+    margin-top: 15px;
+    color: #222;
+}
+
+.informacoes h4 {
+    color: #47783d;
+    font-size: 15px;
+    margin: 12px 0 8px;
+}
+
+.dados-basicos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.dados-basicos span {
+    background: #f2f6f1;
+    padding: 9px;
+    border-radius: 7px;
+}
+
+.mais-informacoes {
+    margin-top: 15px;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 12px 0;
+}
+
+.mais-informacoes summary {
+    color: #176e72;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    list-style-position: inside;
+}
+
+.mais-informacoes summary:hover {
+    color: #218b83;
+}
+
+.mais-informacoes[open] summary {
+    margin-bottom: 12px;
+}
+
+.mais-informacoes p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.mais-informacoes h4 {
+    margin-top: 15px;
+}
+
+.passo-a-passo {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.passo-a-passo summary {
+    background: linear-gradient(135deg, #105d61, #218b83);
+    color: white;
+    padding: 18px 24px;
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+}
+
+.passo-a-passo summary::-webkit-details-marker {
+    display: none;
+}
+
+.passo-a-passo summary::before {
+    content: "+";
+    margin-right: 12px;
+    font-size: 22px;
+}
+
+.passo-a-passo details[open] summary::before {
+    content: "−";
+}
+
+.passo-a-passo summary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+/* Esconde as etapas quando estiver fechado */
+.passo-a-passo details > :not(summary) {
+    display: none;
+}
+
+/* Mostra as etapas quando estiver aberto */
+.passo-a-passo details[open] > :not(summary) {
+    display: block;
+}
+
+/* Mostra que o botão é clicável */
+.passo-a-passo summary {
+    cursor: pointer;
+}
+
+/* Aparência do conteúdo de adoção */
+.etapas-adocao {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 30px !important;
+    row-gap: 30px !important;
+    margin-top: 25px;
+}
+
+.etapa {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px #00000020;
+}
+
+.etapa h3 {
+    color: #176e72;
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.etapa p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+@media (max-width: 750px) {
+    .etapas-adocao {
+        grid-template-columns: 1fr;
+    }
+}
+
+.passo-a-passo details > p {
+    color: #ffffff;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: center;
+    margin: 15px 0 25px;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <header class="cabecalho">
+    <nav class="menu-principal">
+        <a href="index.html" class="logo">
+            <span class="logo-icone">🐾</span>
+            <span>Amigo <strong>Fiel</strong></span>
+        </a>
+
+        <div class="links-menu">
+            <a href="index.html">Início</a>
+            <a href="#pets">Conheça os pets</a>
+            <a href="#como-adotar">Como adotar</a>
+        </div>
+
+        <a href="#pets" class="botao-menu">Quero adotar</a>
+    </nav>
+
+    <section class="destaque">
+        <div class="destaque-texto">
+            <span class="etiqueta">🐶 🐱 A amizade começa aqui</span>
+
+            <h1>Encontre seu novo melhor amigo!</h1>
+
+            <p>
+                Existem muitos animais esperando por uma família.
+                Abra seu coração e transforme uma vida por meio da adoção.
+            </p>
+
+            <div class="botoes-destaque">
+                <a href="#pets" class="botao-principal">
+                    Conhecer os pets
+                </a>
+
+                <a href="#como-adotar" class="botao-secundario">
+                    Como funciona?
+                </a>
+            </div>
+        </div>
+
+        <div class="destaque-imagem">
+            <div class="circulo-imagem">
+                <span>🐶</span>
+                <span>🐱</span>
+                <div class="coracao">♥</div>
+            </div>
+        </div>
+    </section>
+</header>
+
+
+<div class="layout-adocao">
+
+    <aside class="coluna-lateral">
+
+        <!-- BLOCO DE DÚVIDAS -->
+        <section class="bloco-duvidas">
+            <span class="icone-bloco">🐾</span>
+
+            <h2>Dúvidas sobre adoção?</h2>
+
+            <p>
+                Quer saber como funciona a adoção?
+                Conheça nosso processo e tire suas dúvidas.
+            </p>
+
+            <a href="#pets" class="botao-duvidas">
+                Conhecer os pets
+            </a>
+        </section>
+
+        <!-- BLOCO DE DEPOIMENTOS -->
+        <section class="bloco-depoimentos">
+
+            <h2>O que estão falando sobre a gente?</h2>
+
+            <p class="texto-depoimentos">
+                Cada adoção representa uma nova história.
+                Conheça algumas mensagens de famílias adotantes.
+            </p>
+
+            <div class="cartao-depoimento">
+                <div class="cabecalho-depoimento">
+                    <span class="avatar-depoimento">🐶</span>
+                    <div>
+                        <strong>Família adotante</strong>
+                        <small>História de adoção</small>
+                    </div>
+                </div>
+
+                <p>
+                    "Adotar foi uma experiência maravilhosa.
+                    Encontramos um companheiro para a vida toda!"
+                </p>
+
+                <span class="estrelas">★★★★★</span>
+            </div>
+
+            <div class="cartao-depoimento">
+                <div class="cabecalho-depoimento">
+                    <span class="avatar-depoimento">🐱</span>
+                    <div>
+                        <strong>Família adotante</strong>
+                        <small>História de adoção</small>
+                    </div>
+                </div>
+
+                <p>
+                    "Nossa família ficou ainda mais feliz
+                    depois da chegada do nosso novo amigo."
+                </p>
+
+                <span class="estrelas">★★★★★</span>
+            </div>
+
+        </section>
+
+    </aside>
+
+    <!-- OS PETS FICARÃO À DIREITA -->
+    <main class="area-pets" id="pets">
+
+        <h2>Pets disponíveis para adoção</h2>
+
+    <div class="lista-pets">
+
+        <!-- REX -->
+        <div class="pet">
+            <h3>Rex</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('rex', -1)">❮</button>
+                <img id="rex" src="./imagens/rex1.JPG" alt="Foto do Rex">
+                <button class="seta proxima" onclick="trocarFoto('rex', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-rex">Foto 1 de 2</p>
+
+            
+<div class="informacoes">
+
+    <h4>Informações básicas</h4>
+
+    <div class="dados-basicos">
+        <span><strong>Espécie:</strong> Cão</span>
+        <span><strong>Idade:</strong> 12 anos</span>
+        <span><strong>Sexo:</strong> Macho</span>
+        <span><strong>Porte:</strong> Grande</span>
+    </div>
+
+    <details class="mais-informacoes">
+
+        <summary>Mais informações</summary>
+
+        <h4>Saúde</h4>
+        <p>
+            <strong>Castrado:</strong> Não<br>
+            <strong>Vacinado:</strong> Sim<br>
+            <strong>Vermifugado:</strong> Sim
+        </p>
+
+        <h4>Personalidade</h4>
+        <p>
+            Gosto de brincar e sou muito apegado
+            a quem cuida de mim. Adoro carinho,
+            principalmente na barriga.
+        </p>
+
+        <h4>Exigências da casa</h4>
+        <p>
+            Gosto de caminhar, preciso de uma boa
+            alimentação e higiene. Conforto é
+            essencial para mim.
+        </p>
+
+    </details>
+
+</div>
+
+
+            <button class="botao-adocao" onclick="selecionarPet('Rex')">
+                Quero adotar o Rex
+            </button>
+        </div>
+
+
+        <!-- BIDU -->
+        <div class="pet">
+            <h3>Bidu</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('bidu', -1)">❮</button>
+                <img id="bidu" src="./imagens/bidu1.jpeg" alt="Foto do Bidu">
+                <button class="seta proxima" onclick="trocarFoto('bidu', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-bidu">Foto 1 de 2</p>
+
+            <div class="informacoes">
+
+                <h4>Informações básicas</h4>
+
+                <div class="dados-basicos">
+                    <span><strong>Espécie:</strong> Cão</span>
+                    <span><strong>Idade:</strong> 13 anos</span>
+                    <span><strong>Sexo:</strong> Macho</span>
+                    <span><strong>Porte:</strong> Médio</span>
+                </div>
+
+                <details class="mais-informacoes">
+                    <summary>Mais informações</summary>
+
+                    <h4>Saúde</h4>
+                    <p>
+                        <strong>Castrado:</strong> Não<br>
+                    <strong>Vacinado:</strong> Sim<br>
+                    <strong>Vermifugado:</strong> Sim
+                    </p>
+
+                    <h4>Personalidade</h4>
+                    <p>Sou muito obediente, carinhoso, dengoso e grudento. Minha adaptação com crianças e outros cachorros é boa.</p>
+
+                    <h4>Exigências da casa</h4>
+                    <p>Um quintal médio já me atende. Consigo me adaptar a ambientes pequenos por pouco tempo, mas posso ficar ansioso.</p>
+                </details>
+
+            </div>
+
+            <button class="botao-adocao" onclick="selecionarPet('Bidu')">
+                Quero adotar o Bidu
+            </button>
+        </div>
+
+
+        <!-- GARFIELD -->
+        <div class="pet">
+            <h3>Garfield</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('garfield', -1)">❮</button>
+                <img id="garfield" src="./imagens/garfield1.png" alt="Foto do Garfield">
+                <button class="seta proxima" onclick="trocarFoto('garfield', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-garfield">Foto 1 de 2</p>
+
+            <div class="informacoes">
+
+                <h4>Informações básicas</h4>
+
+                <div class="dados-basicos">
+                    <span><strong>Espécie:</strong> Gato</span>
+                    <span><strong>Idade:</strong> 4 anos</span>
+                    <span><strong>Sexo:</strong> Macho</span>
+                    <span><strong>Porte:</strong> Médio</span>
+                </div>
+
+                <details class="mais-informacoes">
+                    <summary>Mais informações</summary>
+
+                    <h4>Saúde</h4>
+                    <p>
+                        <strong>Castrado:</strong> Sim<br>
+                    <strong>Vacinado:</strong> Sim<br>
+                    <strong>Vermifugado:</strong> Sim
+                    </p>
+
+                    <h4>Personalidade</h4>
+                    <p>Sou adorável, carinhoso e grudento.</p>
+
+                    <h4>Exigências da casa</h4>
+                    <p>Preciso morar em apartamento ou casa com telas de proteção nas janelas e sacadas. As telas são obrigatórias para a adoção de gatos neste projeto.</p>
+                </details>
+
+            </div>
+
+            <button class="botao-adocao" onclick="selecionarPet('Garfield')">
+                Quero adotar o Garfield
+            </button>
+        </div>
+
+
+        <!-- TIMTIM -->
+        <div class="pet">
+            <h3>Timtim</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('timtim', -1)">❮</button>
+                <img id="timtim" src="./imagens/timtim1.jpeg" alt="Foto do Timtim">
+                <button class="seta proxima" onclick="trocarFoto('timtim', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-timtim">Foto 1 de 2</p>
+
+            <div class="informacoes">
+
+                <h4>Informações básicas</h4>
+
+                <div class="dados-basicos">
+                    <span><strong>Espécie:</strong> Gato</span>
+                    <span><strong>Idade:</strong> 2 anos</span>
+                    <span><strong>Sexo:</strong> Macho</span>
+                    <span><strong>Porte:</strong> Médio</span>
+                </div>
+
+                <details class="mais-informacoes">
+                    <summary>Mais informações</summary>
+
+                    <h4>Saúde</h4>
+                    <p>
+                        <strong>Castrado:</strong> Não<br>
+                    <strong>Vacinado:</strong> Não<br>
+                    <strong>Vermifugado:</strong> Sim
+                    </p>
+
+                    <h4>Personalidade</h4>
+                    <p>Sou teimoso, rebelde e caçador. Gosto de ficar no meu canto; carinho é só quando eu preciso.</p>
+
+                    <h4>Exigências da casa</h4>
+                    <p>Preciso morar em apartamento ou casa com telas de proteção nas janelas e sacadas. As telas são obrigatórias para a adoção de gatos neste projeto.</p>
+                </details>
+
+            </div>
+
+            <button class="botao-adocao" onclick="selecionarPet('Timtim')">
+                Quero adotar o Timtim
+            </button>
+        </div>
+
+
+        <!-- LUA -->
+        <div class="pet">
+            <h3>Lua</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('lua', -1)">❮</button>
+                <img id="lua" src="./imagens/lua1.jpeg" alt="Foto da Lua">
+                <button class="seta proxima" onclick="trocarFoto('lua', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-lua">Foto 1 de 2</p>
+
+            <div class="informacoes">
+
+                <h4>Informações básicas</h4>
+
+                <div class="dados-basicos">
+                    <span><strong>Espécie:</strong> Cão</span>
+                    <span><strong>Idade:</strong> 4 meses</span>
+                    <span><strong>Sexo:</strong> Fêmea</span>
+                    <span><strong>Porte:</strong> Pequeno</span>
+                </div>
+
+                <details class="mais-informacoes">
+                    <summary>Mais informações</summary>
+
+                    <h4>Saúde</h4>
+                    <p>
+                        <strong>Castrada:</strong> Não<br>
+                    <strong>Vacinada:</strong> Sim<br>
+                    <strong>Vermifugada:</strong> Sim
+                    </p>
+
+                    <h4>Personalidade</h4>
+                    <p>Sou carinhosa e manhosa.</p>
+
+                    <h4>Exigências da casa</h4>
+                    <p>Não gosto de ficar sozinha. Costumo comer em horários definidos e tenho um apetite moderado.</p>
+                </details>
+
+            </div>
+
+            <button class="botao-adocao" onclick="selecionarPet('Lua')">
+                Quero adotar a Lua
+            </button>
+        </div>
+
+
+        <!-- PÉROLA -->
+        <div class="pet">
+            <h3>Pérola</h3>
+
+            <div class="galeria">
+                <button class="seta anterior" onclick="trocarFoto('perola', -1)">❮</button>
+                <img id="perola" src="./imagens/perola1.jpeg" alt="Foto da Pérola">
+                <button class="seta proxima" onclick="trocarFoto('perola', 1)">❯</button>
+            </div>
+
+            <p class="contador" id="contador-perola">Foto 1 de 2</p>
+
+            <div class="informacoes">
+
+                <h4>Informações básicas</h4>
+
+                <div class="dados-basicos">
+                    <span><strong>Espécie:</strong> Cão</span>
+                    <span><strong>Idade:</strong> 2 anos</span>
+                    <span><strong>Sexo:</strong> Fêmea</span>
+                    <span><strong>Porte:</strong> Médio</span>
+                </div>
+
+                <details class="mais-informacoes">
+                    <summary>Mais informações</summary>
+
+                    <h4>Saúde</h4>
+                    <p>
+                        <strong>Castrada:</strong> Sim<br>
+                    <strong>Vacinada:</strong> Sim<br>
+                    <strong>Vermifugada:</strong> Sim
+                    </p>
+
+                    <h4>Personalidade</h4>
+                    <p>Sou carinhosa e tranquila.</p>
+
+                    <h4>Exigências da casa</h4>
+                    <p>Preciso de um ambiente seguro e confortável. As exigências de telas de proteção devem ser confirmadas conforme a avaliação de adoção.</p>
+                </details>
+
+            </div>
+
+            
+        <button class="botao-adocao" onclick="selecionarPet('Pérola')">
+            Quero adotar a Pérola
+        </button>
+
+    </div> <!-- Fecha o card Pérola -->
+
+</div> <!-- Fecha lista-pets -->
+
+</main> <!-- Fecha area-pets -->
+
+</div> <!-- Fecha layout-adocao -->
+
+
+
+    <script>
+
+        const fotos = {
+            rex: [
+                "./imagens/rex1.JPG",
+                "./imagens/rex2.png"
+            ],
+
+            bidu: [
+                "./imagens/bidu1.jpeg",
+                "./imagens/bidu2.jpeg"
+            ],
+
+            garfield: [
+                "./imagens/garfield1.png",
+                "./imagens/garfield2.png"
+            ],
+
+            timtim: [
+                "./imagens/timtim1.jpeg",
+                "./imagens/timtim2.jpeg"
+            ],
+
+            lua: [
+                "./imagens/lua1.jpeg",
+                "./imagens/lua2.jpeg"
+            ],
+
+            perola: [
+                "./imagens/perola1.jpeg",
+                "./imagens/perola2.jpeg"
+            ]
+        };
+
+
+        const fotoAtual = {
+            rex: 0,
+            bidu: 0,
+            garfield: 0,
+            timtim: 0,
+            lua: 0,
+            perola: 0
+        };
+
+
+        function trocarFoto(animal, direcao) {
+
+            if (!fotos[animal]) {
+                return;
+            }
+
+            const totalFotos = fotos[animal].length;
+
+            fotoAtual[animal] =
+                (fotoAtual[animal] + direcao + totalFotos) % totalFotos;
+
+            document.getElementById(animal).src =
+                fotos[animal][fotoAtual[animal]];
+
+            document.getElementById("contador-" + animal).textContent =
+                "Foto " +
+                (fotoAtual[animal] + 1) +
+                " de " +
+                totalFotos;
+        }
+
+
+        function selecionarPet(nomePet) {
+
+            window.location.href =
+                "adocao.html?pet=" + encodeURIComponent(nomePet);
+
+        }
+
+    </script>
+<section id="como-adotar" class="passo-a-passo">
+
+    <details>
+
+
+        <summary>Como funciona a adoção? </summary>
+
+    <h2>Como funciona a adoção?</h2>
+
+    <p>
+        Adotar um animal é um compromisso especial.
+        Comheça as etapas para receber seu nomo amigo.
+    </p>
+
+    <div class="etapas-adocao">
+
+
+       <div class="etapa">
+           <h3>1. Escolha seu pet</h3>
+           <p>Conheça nossos animais disponíveis e encontre aquele que combina com você.</p>
+       </div>
+
+       <div class="etapa">
+           <h3>2. Conheça as exigências</h3>
+           <p>Confira as necessidades do animal e prepare sua casa para recebe_lo.</p>
+       </div>
+
+       <div class="etapa">
+           <h3>3. Preencha o formulário</h3>
+           <p>Informe seus dados e conte um pouco sobre o lar que pretende oferecer.</p>
+       </div>        
+
+       <div class="etapa">
+           <h3>4. Aguarde o conato</h3>
+           <p>Nossa equipe entrará em contato para conversar sobre a adoção.</p>
+       </div>
+
+       <div class="etapa">
+           <h3>5. prepare o novo lar</h3>
+           <p>Organize um ambiente seguro, confortável e adequado para seu novo amigo.</p>
+       </div>
+
+       <div class="etapa">
+            <h3>6. Receba seu amigo!</h3>
+            <p>Com tudo preparado, começa uma nova história de amizade e carinho.</p>
+       </div>
+
+    </div>
+
+</details>
+
+</section>
+
+<section class="convite-adocao">
+
+    <div class="convite-texto">
+        <span class="convite-etiqueta">🐾 Faça parte dessa história</span>
+
+        <h2>Um lar pode mudar uma vida!</h2>
+
+        <p>
+            Existem animais esperando por uma oportunidade.
+            Conheça nossos pets e descubra quem pode ser
+            seu novo melhor amigo.
+        </p>
+
+        <a href="#pets" class="botao-convite">
+            Encontrar meu novo amigo
+            <span>→</span>
+        </a>
+    </div>
+
+    <div class="convite-decoracao">
+        <span class="pata-grande">🐾</span>
+        <span class="coracao-convite">♥</span>
+    </div>
+
+</section>
+
+
+<footer class="rodape">
+
+    <div class="rodape-conteudo">
+
+        <div class="marca-rodape">
+
+            <div class="logo-animais">
+                <span>🐶</span>
+                <span>🐱</span>
+            </div>
+
+            <h2>Amigo Fiel</h2>
+
+            <p>
+                Todo animal merece um lar cheio de amor.
+            </p>
+
+            <p class="frase-rodape">
+                Adotar é transformar duas vidas: a sua e a deles.
+            </p>
+
+        </div>
+
+        <div class="coluna-rodape">
+            <h3>Navegação</h3>
+            <a href="index.html">Início</a>
+            <a href="#pets">Conheça nossos pets</a>
+            <a href="adocao.html">Quero adotar</a>
+        </div>
+
+        <div class="coluna-rodape">
+            <h3>Nosso projeto</h3>
+            <a href="#como-adotar">Como funciona a adoção?</a>
+            <a href="#pets">Pets disponíveis</a>
+            <a href="mailto:contato@amigofiel.com">Entre em contato</a>
+        </div>
+
+        <div class="coluna-rodape">
+            <h3>Acompanhe</h3>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+        </div>
+
+    </div>
+
+    <div class="rodape-final">
+        <p>© 2026 Amigo Fiel — Todos os direitos reservados.</p>
+        <p>Feito com ❤️ para quem ama os animais.</p>
+    </div>
+
+</footer>
+
+
+</body>
+</html>
